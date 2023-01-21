@@ -10,8 +10,9 @@ calculateRouter.post("/calculate", VerifyToken, async (req, res) =>{
     let {annualInstalmentAmount, annualInterestRate, totalNumberofYears} = req.body
     let investmentAmount = annualInstalmentAmount * totalNumberofYears;
     let rate = annualInterestRate / 100;
-    // let totalMaturityValue = annualInstalmentAmount * [({(1+ rate) ** totalNumberofYears} -1) / rate];
-    // res.send({investmentAmount})
+    let totalMaturityValue = investmentAmount * (Math.pow((1 + (rate / 1)), (1 * totalNumberofYears)));
+    let interest = totalMaturityValue - investmentAmount;
+    res.send({investmentAmount, totalMaturityValue, interest})
    } catch (error) {
     res.status(400).send({msg : "Somthing Went Wrong", error})
    }
